@@ -1,0 +1,31 @@
+{
+  "javascript.validate.enable": true,
+  "prettier.disableLanguages": ["json", "yaml"],
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "eslint.validate": ["javascript", { "language": "typescript", "autoFix": true }],
+  "yaml.format.enable": false,
+  "editor.formatOnSave": true,
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/dist/*/**": true,
+    "**/coverage/*/**": true
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.format.semicolons": "remove"
+}

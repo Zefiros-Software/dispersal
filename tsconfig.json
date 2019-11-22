@@ -1,0 +1,13 @@
+{
+  "extends": "@zefiros/npm-defaults/tsconfig.base.json",
+  "include": ["src/**/*.ts", "test/**/*.ts", "typings/**/*.ts", "*.js", "*.json"],
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"],
+      "*": ["./typings/*"]
+    },
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "rootDir": "."
+  }
+}
