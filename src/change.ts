@@ -1,13 +1,14 @@
 import { Transform, TransformComposition, Pipe } from '~/transform'
 
-export interface Change<In, Out> {
-    version: string
+export interface Change<In, Out, Version extends string> {
+    in?: In
+    version: Version
     description?: string
-    transformer: Transform<In, Out> | TransformComposition<In, Out> | Pipe<In, Out>
+    transform: Transform<In, Out> | TransformComposition<In, Out> | Pipe<In, Out>
 }
 
-export interface RChange<In, Out> {
-    version: string
+export interface RChange<In, Out, Version extends string> {
+    version: Version
     description?: string
-    transformer: Transform<In, Out> | TransformComposition<In, Out>
+    transform: Transform<In, Out> | TransformComposition<In, Out>
 }

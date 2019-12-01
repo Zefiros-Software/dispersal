@@ -5,7 +5,7 @@ test('migration', () => {
     const migration = new Migration({
         version: '1',
         description: 'foo',
-        transformer: {
+        transform: {
             transform: (x: number) => x + 1,
         },
     })
@@ -18,7 +18,7 @@ test('migration', () => {
 test('migration no description', () => {
     const migration = new Migration({
         version: '1',
-        transformer: {
+        transform: {
             transform: (x: number) => x + 1,
         },
     })
@@ -32,7 +32,7 @@ test('composite migration', () => {
     const migration = new Migration({
         version: '1',
         description: 'foo',
-        transformer: compose(
+        transform: compose(
             {
                 description: 'foo bar to',
                 transform: (x: number) => (x + 1).toString(),

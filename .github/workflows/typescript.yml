@@ -1,0 +1,39 @@
+name: Node CI
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 1
+    - name: Use Node.js 10
+      uses: actions/setup-node@master
+      with:
+        node-version: 10
+    - run: npm install -g yarn codecov snyk npm-defaults
+    - name: yarn install, build, and test
+      run: npm-defaults ci
+      env:
+        CI: "true"
+    - name: coverage
+      run: codecov
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+    - name: snyk
+      run: snyk test && snyk monitor
+      env:
+        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+    - name: release
+      if: github.ref == 'refs/heads/master' && !github.event.release
+      run: |
+        git config --global user.name 'Hoid'
+        git config --global user.email 'hoid@zefiros.io'
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        yarn release
+        git push --follow-tags origin HEAD:refs/heads/master 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
