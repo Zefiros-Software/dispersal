@@ -29,13 +29,12 @@ jobs:
         SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
     - name: release
       if: github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master'
-      run: |
-         ./bin/run release
+      run: npm-defaults release
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         NPM_TOKEN: ${{secrets.NPM_TOKEN}}
     - name: create pull request
       if: github.ref == 'refs/heads/development'
-      run: ./bin/run make-release
+      run: npm-defaults make-release
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
