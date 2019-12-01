@@ -10,10 +10,10 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 1
-    - name: Use Node.js 10
+    - name: Use Node.js 12
       uses: actions/setup-node@master
       with:
-        node-version: 10
+        node-version: 12
     - run: npm install -g yarn codecov snyk @zefiros/npm-defaults@next
     - name: yarn install, build, and test
       run: npm-defaults ci
