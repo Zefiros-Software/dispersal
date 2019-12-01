@@ -28,12 +28,14 @@ jobs:
       env:
         SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
     - name: release
-      if: github.ref == 'refs/heads/master' && !github.event.release
+      if: github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master'
       run: |
-        git config --global user.name 'Hoid'
-        git config --global user.email 'hoid@zefiros.io'
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        yarn release
-        git push --follow-tags origin HEAD:refs/heads/master 
+         ./bin/run release
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+    - name: create pull request
+      if: github.ref == 'refs/heads/development'
+      run: ./bin/run make-release
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
