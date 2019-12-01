@@ -11,6 +11,10 @@
   "engines": {
     "node": ">=12"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zefiros-Software/dispersal.git"
+  },
   "files": [
     "dist/**"
   ],
