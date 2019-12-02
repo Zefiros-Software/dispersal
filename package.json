@@ -11,6 +11,9 @@
   "engines": {
     "node": ">=12"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Zefiros-Software/dispersal.git"
