@@ -171,28 +171,25 @@ describe('transform 3 versions api downgrade', () => {
         {
             version: '2019-11-09',
             description: 'newest version',
-            // compose(
-            //     {
-            //         description: 'change `from` type',
-            //         transform: (from: Obj) => ({
-            //             to: {
-            //                 from: from.to.fromage,
-            //             },
-            //         }),
-            //     },
-            //     {
-            //         description: 'migrate `from` to `to`',
-            //         transform: from => ({
-            //             from: from.to.from,
-            //         }),
-            //     }
-            // ),
         },
         {
             version: '2019-11-08',
-            transform: (from: Obj) => ({
-                from: from.to.fromage,
-            }),
+            transform: compose(
+                {
+                    description: 'change `from` type',
+                    transform: (from: Obj) => ({
+                        to: {
+                            from: from.to.fromage,
+                        },
+                    }),
+                },
+                {
+                    description: 'migrate `from` to `to`',
+                    transform: from => ({
+                        from: from.to.from,
+                    }),
+                }
+            ),
         },
         {
             version: '2019-11-06',
