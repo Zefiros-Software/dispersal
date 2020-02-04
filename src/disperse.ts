@@ -6,11 +6,21 @@ export type DisperseTarget<Target, Version> = {
     target: Target
 }
 
-export class DisperseUp<Target, Versions extends { target: any; version: string }> {
-    public migrations: Migration<any>[]
+export class DisperseBase {
+    public migrations: Migration<any>[] = []
     public versions: Record<string, number> = {}
+    public get descriptions(): Array<{ version: string; changes: string[]; description: string | undefined }> {
+        return this.migrations.map(m => ({
+            version: m.version,
+            description: m.description,
+            changes: m.changes,
+        }))
+    }
+}
 
+export class DisperseUp<Target, Versions extends { target: any; version: string }> extends DisperseBase {
     public constructor(migrations: Migration<any>[]) {
+        super()
         this.migrations = migrations.sort((a, b) => a.version.localeCompare(b.version))
         this.versions = Object.fromEntries(this.migrations.map((m, i) => [m.version, i]))
     }
@@ -25,14 +35,6 @@ export class DisperseUp<Target, Versions extends { target: any; version: string 
         }
         return (target.target as unknown) as Target
     }
-
-    public get descriptions(): Array<{ version: string; changes: string[]; description: string | undefined }> {
-        return this.migrations.map(m => ({
-            version: m.version,
-            description: m.description,
-            changes: m.changes,
-        }))
-    }
 }
 
 export type DisperseFrom<From, Version> = {
@@ -41,11 +43,12 @@ export type DisperseFrom<From, Version> = {
 }
 type ExtractVersion<A, T> = A extends { version: T } ? A : never
 
-export class DisperseDown<From, Versions extends { from: any; version: string }> {
+export class DisperseDown<From, Versions extends { from: any; version: string }> extends DisperseBase {
     public migrations: Migration<any>[]
     public versions: Record<string, number> = {}
 
     public constructor(migrations: Migration<any>[]) {
+        super()
         this.migrations = migrations.sort((a, b) => -a.version.localeCompare(b.version))
         this.versions = Object.fromEntries(this.migrations.map((m, i) => [m.version, i]))
     }
@@ -61,14 +64,6 @@ export class DisperseDown<From, Versions extends { from: any; version: string }>
             from.from = this.migrations[i].transform(from.from)
         }
         return (from.from as unknown) as Versions['from']
-    }
-
-    public get descriptions(): Array<{ version: string; changes: string[]; description: string | undefined }> {
-        return this.migrations.map(m => ({
-            version: m.version,
-            description: m.description,
-            changes: m.changes,
-        }))
     }
 }
 
