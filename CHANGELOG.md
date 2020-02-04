@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/Zefiros-Software/dispersal/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2020-02-04)
+
+
+### Features
+
+* bump npm-defaults ([1a209ea](https://github.com/Zefiros-Software/dispersal/commit/1a209eac4129703e2faf5df6b6b6f7a14085ac3d))
+
 # 1.0.0-beta.1 (2019-12-03)
 
 
